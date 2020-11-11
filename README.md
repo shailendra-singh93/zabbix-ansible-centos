@@ -1,66 +1,68 @@
-## 概要
+## Overview
 
-Ansible用playbookです
-CentOS7(or8)環境に、Zabbix4.0-server(rpm)とZabbix-agent(rpm)の機能を自動設定する
+Ansible-playbook
+Centos-7 or Centos-8 Environment
+Zabbix4.0-server(rpm)
+Zabbix-agent(rpm)
 
-## 対象となる環境
+## Target Environment
 
 * CentOS7 ( or CentOS8 )
-* インターネットにつながり、ansibleサーバからrootユーザで直接ssh(ssh公開鍵認証でログイン)できること
-* 最小構成でインストールしたCentOS7(or8)で稼働確認実施
+* Prepare centos-VMs and install git and ansible
+* Setup ssh
 
-## 自動設定内容
+## common setting 
 
-* os(共通(common))
-	+ selinux無効化
-	+ ホスト名設定
-	+ timezoneの設定(zone情報指定可能)
-	+ zabbix-repoの登録
+* os(common)
+	+ selinux
+	+ hostname
+	+ timezone(zone Asia/Kolkata)
+	+ zabbix-repo
 
 * zabbix-server
-  + Firewallの穴開け(http,snmptrap,zabbix-server)
+  + Firewall setting for services(http,snmptrap,zabbix-server)
   + zabbix4.0(zabbix official repo)
-  + httpd, php, db(mariadb or mysql)の設定
-  + CentOS8の場合、mariadbではなく、mysqlを利用(https://support.zabbix.com/browse/ZBX-16465 の回避)
+  + httpd, php, db(mariadb or mysql)
+  + support for CentOS8: mariadb/mysql (https://support.zabbix.com/browse/ZBX-16465)
 	
   
 * zabbix-agent
 	+ zabbix-agent4.0
-  + zabbix-agentの設定(Server,ServerActive,HostnameItem)
+  + zabbix-agent settings(Server,ServerActive,HostnameItem)
 
-# 指定可能なインストール先/設定内容
+# Inventory details is specified below
 
-* zabbix40/inventory/inventory.ini
+* zabbix-ansible-centos/inventory/inventory.ini
 
 ```
 [servers] ... zabbix server
 [agents] ... zabbix-agent client
-[all:vars] ... vars(全体用)
-[servers:vars] ... vars(servers用)
+[all:vars] ... vars(Variables for all)
+[servers:vars] ... vars(For servers)
 ```
 
-今回、仮設定した内容（適宜等ファイルを変更して利用してください)
+Temporary inventory details set as below（Change it as per your environment)
 ```
 [servers]
-testsv01 ansible_ssh_host=192.168.11.1 ansible_ssh_user=root
+test-ui ansible_ssh_host=192.168.133.254 ansible_ssh_user=root
 [agents]
-testcl01 ansible_ssh_host=192.168.11.2 ansible_ssh_user=root
+haproxy-test ansible_ssh_host=192.168.133.160 ansible_ssh_user=root
 [all:vars]
-timezone="Asia/Tokyo"
-zabbix_server_ip="192.168.11.1"
+timezone="Asia/Kolkata"
+zabbix_server_ip="192.168.133.254"
 [servers:vars]
 zabbix_mysql_password="password"
 ```
 
-### playbook実行
+### Execute Playbooks as below
 
-ansibleサーバで実行
+(Run on ansible server)
 ```
-git clone https://github.com/mishikawan/zabbix40-ansible.git
-ansible-playbook -i inventory/inventory.ini site.yml
+Clone repo using cmd as: git clone https://github.com/shailendra-singh93/zabbix-ansible-centos.git
+Run the playbook as: ansible-playbook -i inventory/inventory.ini site.yml
 ```
 
-無事完了すると、zabbixサーバ上でzabbixサーバが稼働しています。以下、URLでアクセス可能。
+When Playbook execution is completed successfully, You can access zabbix-server GUI as below:
 ```
 http://{zabbix-server-ip}/zabbix
   ID = Admin
