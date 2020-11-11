@@ -1,0 +1,7 @@
+- name: check OS distribution
+  fail: msg="Sorry. the playbook can only on Centos7 or Centos8."
+  when: 
+    - ( ansible_distribution != 'CentOS' ) or
+      (( ansible_distribution_major_version != '8' ) and
+      ( ansible_distribution_major_version != '7' ))
+
