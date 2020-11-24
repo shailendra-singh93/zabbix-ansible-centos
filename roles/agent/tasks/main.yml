@@ -6,6 +6,7 @@
     permanent: true
     immediate: yes
     state: enabled
+    ignore_errors: true
 
 - name: yum install zabbix-agent
   yum:
