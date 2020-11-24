@@ -16,4 +16,5 @@
   yum:
     name: "{{repo_url}}"
     state: present
+    disable_gpg_check: True
 
