@@ -44,12 +44,12 @@ Zabbix-agent(rpm) on Agent-host
 Temporary inventory details set as below（Change it as per your environment)
 ```
 [servers]
-test-ui ansible_ssh_host=192.168.133.254 ansible_ssh_user=root
+zabbix-server ansible_ssh_host=192.168.133.200 ansible_ssh_user=root
 [agents]
-haproxy-test ansible_ssh_host=192.168.133.160 ansible_ssh_user=root
+zabbix-agent ansible_ssh_host=192.168.133.201 ansible_ssh_user=root
 [all:vars]
 timezone="Asia/Kolkata"
-zabbix_server_ip="192.168.133.254"
+zabbix_server_ip="192.168.133.200"
 [servers:vars]
 zabbix_mysql_password="password"
 ```
