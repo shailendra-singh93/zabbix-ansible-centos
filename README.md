@@ -3,15 +3,15 @@
 Ansible-playbook for
 Centos-7 or Centos-8 Environment to install
 Zabbix4.0-server(rpm) on server host and
-Zabbix-agent(rpm) agent-host
+Zabbix-agent(rpm) on agent-host
 
 ## Target Environment
 
 * CentOS7 ( or CentOS8 )
 * Prepare centos-VMs and install git and ansible using (# sudo yum install -y git ansible)
 * Setup ssh keys beteween server host and agent host as
-#ssh-keygen -t rsa
-# ssh-copy-id user@<server host & agent host ip>
+* # ssh-keygen -t rsa
+* # ssh-copy-id user@<server host & agent host ip>
 
 ## common setting 
 
