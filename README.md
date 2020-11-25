@@ -1,8 +1,8 @@
 ## Overview
 
-Ansible-playbook
-Centos-7 or Centos-8 Environment
-Zabbix4.0-server(rpm)
+Ansible-playbook for
+Centos-7 or Centos-8 Environment to install
+Zabbix4.0-server(rpm) and
 Zabbix-agent(rpm)
 
 ## Target Environment
