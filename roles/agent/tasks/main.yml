@@ -1,12 +1,18 @@
 - include: tasks/check.yml
 
-- name: set firewall zabbix-agent.service
+- name: check if firewalld is running
+    command: systemctl is-active firewalld
+    register: firewalld_result
+    changed_when: False
+    ignore_errors: True  # rc is 3 when firewalld is stopped
+
+- name: set firewalld port for zabbix-agent.service
   firewalld:
     port: 10050/tcp
     permanent: true
     immediate: yes
     state: enabled
-    ignore_errors: true
+   when: firewalld_result.stdout == "active"
 
 - name: yum install zabbix-agent
   yum:
