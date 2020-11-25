@@ -1,32 +1,32 @@
-## Overview
+## Overview Guide
 
 Ansible-playbook for
-Centos-7 or Centos-8 Environment to install
-Zabbix4.0-server(rpm) on server host and
-Zabbix-agent(rpm) on agent-host
+CentOS-7 or CentOS-8 Environment to install
+Zabbix4.0-server(rpm) on Server-host and
+Zabbix-agent(rpm) on Agent-host
 
 ## Environment for this setup
 
-* CentOS7 ( or CentOS8 )
-* Prepare centos-VMs and install git and ansible using (# sudo yum install -y git ansible)
-* Setup ssh keys beteween server host and agent host as (# ssh-keygen -t rsa, # ssh-copy-id user@<server host & agent host ip>)
+* CentOS-7 or CentOS-8
+* Prepare CentOS-VMs and install git and ansible using (# sudo yum install -y git ansible)
+* Configure ssh-key beteween Server-host and Agent-host as (# ssh-keygen -t rsa, # ssh-copy-id user@<server host IP & agent host IP>)
 
-## Common Setting on both Server host and Agent host 
+## Common Setting on both Server-host and Agent-host 
 
-* os(common)
+* OS specific common settings
 	+ selinux
 	+ hostname
 	+ timezone(zone Asia/Kolkata)
 	+ zabbix-repo
 
-* zabbix-server
+* Zabbix-Server specific seetings
   + Firewall setting for services(http,snmptrap,zabbix-server)
-  + zabbix4.0(zabbix official repo)
+  + zabbix4.0(Zabbix from official repo)
   + httpd, php, db(mariadb or mysql)
-  + support for CentOS8: mariadb/mysql (https://support.zabbix.com/browse/ZBX-16465)
+  + Support for CentOS-8: mariadb/mysql
 	
   
-* zabbix-agent
+* Zabbix-agent specific settings
 	+ zabbix-agent4.0
   + zabbix-agent settings(Server,ServerActive,HostnameItem)
 
@@ -35,7 +35,7 @@ Zabbix-agent(rpm) on agent-host
 * zabbix-ansible-centos/inventory/inventory.ini
 
 ```
-[servers] ... zabbix server
+[servers] ... zabbix-server
 [agents] ... zabbix-agent client
 [all:vars] ... vars(Variables for all)
 [servers:vars] ... vars(For servers)
@@ -56,7 +56,7 @@ zabbix_mysql_password="password"
 
 ### Execute Playbooks as below
 
-(Run on ansible server)
+(Run on Ansible-server/Zabbix-server)
 ```
 Clone repo using cmd as: git clone https://github.com/shailendra-singh93/zabbix-ansible-centos.git
 Run the playbook as: ansible-playbook -i inventory/inventory.ini site.yml
